@@ -41,12 +41,21 @@ Under the master branch first of all we create an index.html file to be deployed
 
 
 After writing this html file , run the command
-git commit -m " first commit " -a
+```git commit -m " first commit " -a ```
 
-this will add and commit your file . and at last push the file to your github.
+this will add and commit your file . and at last push the file to your github using :
+``` git push ```
+
+or we can also use hooks which are under 
+```.git > hooks ```
+create a file named **post-commit**  and write in bash script to push the code to github everytime you commit the file
+``` !#/bin/bash
+     git push 
+```
 
 
-For this file to be deployed , we now require jenkins so that as soon as a new change is pushed to master branch it directly goes to production server.
+
+For this file to be deployed , we now require jenkins, so that as soon as a new change is pushed to dev branch, it directly goes to testing server.
 
 
 Login to jenkins and Create a job ,say Job1
@@ -54,20 +63,20 @@ Login to jenkins and Create a job ,say Job1
 After creating the job go to configure the job , and under source code management , enter the github repo url :
 Configure > SCM > Git
 
-Under Build Triggers Go for "Github hook triggers for GITScm polling" option
+Under Build Triggers Go for **"Github hook triggers for GITScm polling"** option
 
-and in the Build section paste this command so that the files of github repo will be copied to the /web location:
+and in the Execute shell section under Build  paste this command so that the files of github repo will be copied to the /web location:
 
-# sudo cp -r * /web
+``` sudo cp -r * /web```
 
 
 click on save
 
 Similarly Create Job2 for the production server which will copy files from master branch in the /originalweb directory
 
-Make sure Branch specifier is set to */master . Rest of the steps are same.
+Make sure Branch specifier is set to /master . Rest of the steps are same.
 
-#Now for Quality assurance team we need a third job which will *merge the code* of developer with the master branch after testing.
+#Now for Quality assurance team we need a third job which will merge the code of developer with the master branch after testing.
 
 So similarly create third job (Job3) :
 
@@ -77,7 +86,7 @@ To trigger this job remotely, we need to setup a token:
 
 Finally we need to push the code to master branch :
 Build > Post Build Actions 
-click *Push only if build succeeds*  and #Merge results
+click Push only if build succeeds  and Merge results
 
 
 Let the developer changes some code in the file
