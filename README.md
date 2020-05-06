@@ -85,8 +85,8 @@ So similarly create third job (Job3) :
 To trigger this job remotely, we need to setup a token:
 
 Finally we need to push the code to master branch :
-> Build > Post Build Actions 
-click Push only if build succeeds  and Merge results
+> Build > Post Build Actions >
+> click ** Push only if build succeeds  and Merge results**
 
 
 Let the developer changes some code in the file
